@@ -1,0 +1,21 @@
+{
+  "name": "zapping-stream",
+  "version": "1.0.0",
+  "description": "desafio codigo para ser parte de Zapping",
+  "main": "src/server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node src/server.js",
+    "audit": "make database-bulk",
+    "develop": "nodemon --watch src"
+  },
+  "author": "Alexis Perez Monares alanpemo.jobs@gmail.com",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "ejs": "^3.1.6",
+    "express": "^4.17.1",
+    "mysql2": "^2.3.3"
+  }
+}

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <%- include('../fragments/head'); %>
+</head>
+
+<body class="container">
+
+    <header>
+        <%- include('../fragments/header'); %>
+    </header>
+
+    <main>
+        <div class="container border">
+
+            <div class="row g-3">
+                <div class="w-100" style="text-align: center">
+                    <video id="video" autoplay controls crossorigin style="height: 400px; width:600px;"></video>
+                    <!-- thirs step -->
+                    <script src="http://localhost:7000/HLS.js"></script>
+
+                    <script src="http://localhost:7000/video.js"></script>
+                </div>
+            </div>
+            <br><br>
+        </div>
+        
+    </main>
+    <br>
+    <footer>
+        <%- include('../fragments/footer'); %>
+    </footer>
+
+</body>
+
+</html>

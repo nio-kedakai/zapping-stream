@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('../fragments/head'); %>
+</head>
+
+<body class="container">
+
+    <header>
+        <%- include('../fragments/header'); %>
+    </header>
+
+    <main>
+        <div class="container border">
+            <div class="row g-3">
+                <form action="/login" method="POST" class="needs-validation row g-3" novalidate>
+                    <h1>Iniciar sesión</h1>
+                    <div class="col-6 col-sm-3 form-floating">
+                        <input type="email" class="form-control" required id="email_login" name="email_login"
+                            placeholder="abc@example.cl">
+
+                        <label for="floatingInput">Correo Electrónico</label>
+                    </div>
+                    <div class="col-6 col-sm-3 form-floating">
+                        <input type="password" class="form-control" required placeholder="Ingrese su contraseña"
+                            name="contrasena_login" id="contrasena_login" aria-label="Contrasena">
+                        <label for="floatingInput">Ingrese su contraseña</label>
+                    </div>
+
+                    <div class="w-100">
+                        <button class="btn btn-primary btn-lg">Iniciar</button>
+                    </div>
+
+
+                </form>
+                <script>
+                    (function () {
+                        'use strict'
+                        var forms = document.querySelectorAll('.needs-validation')
+                        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                        // Loop over them and prevent submission
+                        Array.prototype.slice.call(forms)
+                            .forEach(function (form) {
+                                form.addEventListener('submit', function (event) {
+                                    if (!form.checkValidity()) {
+                                        event.preventDefault()
+                                        event.stopPropagation()
+                                    }
+
+                                    form.classList.add('was-validated')
+                                }, false);
+                            })
+                    })()
+                </script>
+            </div>
+            <br>
+            <div class="badge bg-primary text-wrap" style="width: 50%">
+                <label for="exampleFormControlInput1" class="form-label">¿No tiene una cuenta? Cree una haciendo
+                <a href="/crear" class="link-light">Clic Aquí</a></label>
+            </div>
+            <br>
+            <br>
+        </div>
+    </main>
+    <br>
+    <footer>
+        <%- include('../fragments/footer'); %>
+    </footer>
+
+</body>
+
+</html>

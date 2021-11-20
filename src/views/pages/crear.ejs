@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('../fragments/head'); %>
+</head>
+
+<body class="container">
+
+    <header>
+        <%- include('../fragments/header'); %>
+            <style>
+
+            </style>
+    </header>
+
+    <main>
+        <div class="container border">
+            <div class="row g-3">
+                <form action="/crear" method="POST" class="needs-validation row g-3" novalidate>
+                    <h1>Crear Cuenta</h1>
+                    <div class="col-6 col-sm-3 form-floating">
+                        <input type="text" class="form-control" required placeholder="Ingrese su nombre" name="nombre"
+                            id="nombre" aria-label="Nombre">
+
+                        <label for="floatingInput">Ingrese su nombre</label>
+                    </div>
+                    <div class="col-6 col-sm-3 form-floating">
+                        <input type="email" class="form-control" required id="email" name="email"
+                            placeholder="abc@example.cl">
+
+                        <label for="floatingInput">Correo Electrónico</label>
+                    </div>
+
+                    <!-- Force next columns to break to new line -->
+                    <div class="w-100"></div>
+
+                    <div class="col-6 col-sm-3 form-floating">
+                        <input type="password" class="form-control" required placeholder="Ingrese su contraseña"
+                            name="contrasena" id="contrasena" aria-label="Contrasena">
+                        <label for="floatingInput">Ingrese su contraseña</label>
+                        <div class="invalid-feedback">
+
+                        </div>
+                    </div>
+                    <div class="col-6 col-sm-3 form-floating">
+                        <input type="password" class="form-control" required id="floatingInput" name="contrasena_repita"
+                            id="contrasena_repita" aria-label="Contrasena Repita">
+                        <label for="floatingInput">Repita su contraseña</label>
+                        <div class="invalid-feedback">
+
+                        </div>
+                    </div>
+
+                    <div class="w-100">
+                        <button class="btn btn-primary btn-lg">Crear</button>
+                    </div>
+            </div>
+            <p></p>
+            </form>
+            <script>
+                (function () {
+                    'use strict'
+                    var forms = document.querySelectorAll('.needs-validation')
+                    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                    // Loop over them and prevent submission
+                    Array.prototype.slice.call(forms)
+                        .forEach(function (form) {
+                            form.addEventListener('submit', function (event) {
+                                if (!form.checkValidity()) {
+                                    event.preventDefault()
+                                    event.stopPropagation()
+                                }
+
+                                form.classList.add('was-validated')
+                            }, false);
+                        })
+                })()
+            </script>
+        </div>
+
+        </div>
+    </main>
+
+    <footer>
+        <%- include('../fragments/footer'); %>
+    </footer>
+
+</body>
+
+</html>
