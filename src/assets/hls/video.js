@@ -89,6 +89,8 @@ if (Hls.isSupported()) {
         //cmcd: undefined,
     }
 
+    const url = 'http://localhost:7000';
+    //const url = 'http://147.182.132.227:7000';
     const hls = new Hls(config);
     //var hls = new Hls();
     // bind them together
@@ -97,7 +99,7 @@ if (Hls.isSupported()) {
         console.log('video and hls.js are now bound together !');
         //hls.loadSource('/video');
         //hls.loadSource('http://localhost:7000/segment.m3u8');
-        hls.loadSource('http://localhost:7000/playlist.m3u8');
+        hls.loadSource(url + '/playlist.m3u8');
         hls.on(Hls.Events.MANIFEST_PARSED, function (event, data) {
             console.log(
                 'manifest loaded, found ' + data.levels.length + ' quality level'

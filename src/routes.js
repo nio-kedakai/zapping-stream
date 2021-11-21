@@ -49,7 +49,7 @@ router.get('/player',
         //     }
         // );
         res.render('../views/pages/player', {
-            nombre: req.nombre
+            isLogin: false
         });
     });
 

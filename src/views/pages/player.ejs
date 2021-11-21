@@ -16,19 +16,82 @@
 
     <main>
         <div class="container border">
+            <% if(!isLogin){ %>
+                <br>
+                <h2>Para reproducir debe estar registrado o crear una cuenta</h2>
+                <br><br>
+                <!-- <div class="w-100"></div> -->
+                <!-- <div class="row g-3">
+                    <form action="/login" method="POST" class="needs-validation row g-3" novalidate>
+                        <h1>Iniciar sesión</h1>
+                        <div class="col-6 col-sm-3 form-floating">
+                            <input type="email" class="form-control" required id="email_login" name="email_login"
+                                placeholder="abc@example.cl">
 
-            <div class="row g-3">
-                <div class="w-100" style="text-align: center">
-                    <video id="video" autoplay controls crossorigin style="height: 400px; width:600px;"></video>
-                    <!-- thirs step -->
-                    <script src="http://localhost:7000/HLS.js"></script>
+                            <label for="floatingInput">Correo Electrónico</label>
+                        </div>
+                        <div class="col-6 col-sm-3 form-floating">
+                            <input type="password" class="form-control" required placeholder="Ingrese su contraseña"
+                                name="contrasena_login" id="contrasena_login" aria-label="Contrasena">
+                            <label for="floatingInput">Ingrese su contraseña</label>
+                        </div>
 
-                    <script src="http://localhost:7000/video.js"></script>
+                        <div class="w-100">
+                            <button class="btn btn-primary btn-lg">Iniciar</button>
+                        </div>
+                        <br>
+                        <br>
+                    </form>
+                   
+                    <script>
+                        (function () {
+                            'use strict'
+                            var forms = document.querySelectorAll('.needs-validation')
+                            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                            // Loop over them and prevent submission
+                            Array.prototype.slice.call(forms)
+                                .forEach(function (form) {
+                                    form.addEventListener('submit', function (event) {
+                                        if (!form.checkValidity()) {
+                                            event.preventDefault()
+                                            event.stopPropagation()
+                                        }
+
+                                        form.classList.add('was-validated')
+                                    }, false);
+                                })
+                        })()
+                    </script>
+                </div> -->
+                <div class="row g-3">
+                    <div class="badge bg-primary text-wrap" style="width: 40%">
+                        <label for="exampleFormControlInput1" class="form-label">Si ya posee una cuenta ingrese haciendo
+                            <a href="/login" class="link-light">Clic Aquí</a></label>
+                    </div>
+                    <div class="row g-3"></div>
+                    <div class="badge bg-primary text-wrap" style="width: 40%">
+                        <label for="exampleFormControlInput1" class="form-label">¿No tiene una cuenta? Cree una haciendo
+                            <a href="/crear" class="link-light">Clic Aquí</a></label>
+                    </div>
+                    
                 </div>
-            </div>
-            <br><br>
+                <br><br>
+                <%} else {%>
+
+                    <h2><%=mensaje %></h2>
+                    <div class="row g-3">
+                        <div class="w-100" style="text-align: center">
+                            <video id="video" autoplay controls crossorigin style="height: 400px; width:600px;"></video>
+                            <!-- thirs step -->
+                            <script src="http://localhost:7000/HLS.js"></script>
+
+                            <script src="http://localhost:7000/video.js"></script>
+                        </div>
+                        <br><br>
+                    </div>
+
+                    <%} %>
         </div>
-        
     </main>
     <br>
     <footer>

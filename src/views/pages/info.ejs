@@ -1,25 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <%- include('../fragments/head'); %>
 </head>
+
 <body class="container">
 
-<header>
-    <%- include('../fragments/header'); %>
-</header>
+    <header>
+        <%- include('../fragments/header'); %>
+    </header>
 
-<main>
-    <div class="jumbotron">
-        <h1>Player <%= nombre%> creado</h1>
-        <br><br>
-        ¿Iniciar sesión? <a class="nav-link" href="/login">clic aquí</a>
-    </div>
-</main>
+    <main>
+        <div class="container border">
+            <br>
+            <h2>
+                <%=mensaje%>
+            </h2>
+            <br><br>
+            <div class="row g-3">
+                <% if(!isLogin){ %>
+                    <div class="badge bg-primary text-wrap" style="width: 40%">
+                        <label for="exampleFormControlInput1" class="form-label">Para ingresar al simulador de live
+                            streaming haga
+                            <a href="/login" class="link-light">Clic Aquí</a></label>
+                    </div>
 
-<footer>
-    <%- include('../fragments/footer'); %>
-</footer>
+                    <%} else {%>
+
+                        <div class="badge bg-primary text-wrap" style="width: 40%">
+                            <label for="exampleFormControlInput1" class="form-label">¿No tiene una cuenta? Cree una
+                                haciendo
+                                <a href="/crear" class="link-light">Clic Aquí</a></label>
+                        </div>
+                        <%} %>
+            </div>
+            <br><br>
+        </div>
+        </div>
+    </main>
+
+    <footer>
+        <%- include('../fragments/footer'); %>
+    </footer>
 
 </body>
+
 </html>
