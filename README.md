@@ -111,7 +111,6 @@ cd home/zapping/zapping-streaming
 npm run develop
 ```
 
-
 # Árbol de Directorios
 ```
 zapping-stream
@@ -181,3 +180,14 @@ DB_PASS=Z@pping_2021
 DB_NAME=zapping_db
 DB_PORT=3306
 ```
+
+# Entrar a la aplicación
+
+## Para producción ingresar a la URL:
+
+http://147.182.132.227:7000/
+
+
+## Para modo desarrollo ingresar a la URL:
+
+http://localhost:7000/
