@@ -1,26 +1,84 @@
 # Sobre el proyecto zapping-stream
 
+
+La prueba consiste en hacer un proyecto en NodeJS usando ExpressJS.
+1.- Se entregará una máquina con Centos 8 limpia para que puedas instalar lo necesario.
+2.- Debes crear un sitio web con 3 páginas.
+- Crear Cuenta, Un formulario que solicite nombre, email y contraseña.
+- Login
+- Player
+3.- Debes usar MYSQL para el registro de usuarios.
+4.- Al Player solo deben poder ingresar usuarios Registrados.
+
+A.- Player Backend
+- Crear un microservicio que entregue un Live Streaming HLS con una aplicación
+NodeJS.
+- Utilizar los segmentos de video provistos, que duran 10 segundos cada uno.
+- Se deben entregar 30s de video por request al servicio (5 segmentos)
+- Para simular que es un livestreaming, cada 10 segundos se debe eliminar el último
+segmento (primero de la lista) y agregar un segmento nuevo al final de la lista.
+- La etiqueta EXT-X-MEDIA-SEQUENCE aumenta secuencialmente cuando se quita un
+segmento.
+
+
+Ejemplo archivo m3u8 Live Streaming HLS:
+```
+#EXTM3U
+#EXT-X-VERSION:3
+#EXT-X-TARGETDURATION:6
+#EXT-X-MEDIA-SEQUENCE:1
+#EXTINF:6.000000,
+segmento_1.ts
+#EXTINF:6.000000,
+segmento_2.ts
+#EXTINF:6.000000,
+segmento_3.ts
+#EXTINF:6.000000,
+Segmento_4.ts
+```
+
+Link para descargar segmentos:
+https://drive.google.com/file/d/1exGq6BJ6r1lXezOanp88sWwxqcMbDntJ/view?usp=shari
+ng
+
+B.- Frontend (Player)
+- Debe tener un HTML con Javascript y un player HLS.js o Video.js para reproducir el
+Livestreaming generado en NodeJS.
+- Se puede utilizar Bootstrap y Jquery
+
+Se observará:
+- Orden de código.
+- Buen uso de funciones asincronas y sincronas.
+- Estructura de datos.
+- Buen manejo de la memoria RAM.
+Opcionales
+- Cualquier función adicional interesante/divertida que el desarrollador quiera agregar.
+- Cualquier detalle entretenido en las vistas HTML serán bienvenidos :)
+
+
+
 # Sobre el postulante
 
-
+https://www.linkedin.com/in/alexis-perez-monares/
 
 # Construido con
+NodeJS https://nodejs.org/
+Express https://expressjs.com/
+HTTP Live Streaming https://github.com/video-dev/hls.js
+EJS Embedded JavaScript https://ejs.co/
+Bootstrap https://getbootstrap.com/
 
 # Pre requisitos (Dependencias)
 
-```
-"dependencies": {
-    "cors": "^2.8.5",
-    "dotenv": "^10.0.0",
-    "ejs": "^3.1.6",
-    "express": "^4.17.1",
-    "mysql2": "^2.3.3"
-  }
+Instalar gestor de paquetes para Node
+
+```sh
+npm install npm@latest -g
 ```
 
 # Installar proyecto
 
-## crear folder para el proyecto
+## Crear carpeta root para el proyecto
 ```sh
 mkdir home/zapping/ && cd home/zapping/
 ```
@@ -38,22 +96,11 @@ npm i
 
 
 # Correr proyecto
-
-```
-"scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node src/server.js",
-    "audit": "make database-bulk",
-    "develop": "nodemon --watch src"
-  }
-```
-
 ## Usar comando en productivo
 
 ```sh
 cd home/zapping/zapping-streaming
 npm start
-
 ```
 
 
@@ -62,7 +109,6 @@ npm start
 ```sh
 cd home/zapping/zapping-streaming
 npm run develop
-
 ```
 
 
@@ -116,21 +162,22 @@ zapping-stream
 # Configuraciones del ambiente (.env)
 
 ```
-##Settings /DevLocal
+#Settings /DevLocal
 DB_HOST=localhost
 DB_USER=root
 DB_PASS=zapping_2021
 DB_NAME=zapping_db
 DB_PORT=3000
-
-##Settings for Centos/DevLocal
+```
+```
+#Settings for Centos8/DevLocal
 PORT=7000
-
-##Settings /Centos8
+```
+```
+#Settings /Centos8
 DB_HOST=localhost
 DB_USER=root
 DB_PASS=Z@pping_2021
 DB_NAME=zapping_db
 DB_PORT=3306
-
 ```
