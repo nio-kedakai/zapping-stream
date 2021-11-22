@@ -15,7 +15,7 @@ if (Hls.isSupported()) {
     const config = {
         autoStartLoad: true,
         startPosition: -1,
-        debug: true,
+        debug: false,
         capLevelOnFPSDrop: false,
         capLevelToPlayerSize: false,
         //defaultAudioCodec: undefined,
@@ -97,9 +97,10 @@ if (Hls.isSupported()) {
     hls.attachMedia(video);
     hls.on(Hls.Events.MEDIA_ATTACHED, function () {
         console.log('video and hls.js are now bound together !');
+        let playlist = '/append.m3u8';
         //hls.loadSource('/video');
         //hls.loadSource('http://localhost:7000/segment.m3u8');
-        hls.loadSource(url + '/playlist.m3u8');
+        hls.loadSource(url + playlist);
         hls.on(Hls.Events.MANIFEST_PARSED, function (event, data) {
             console.log(
                 'manifest loaded, found ' + data.levels.length + ' quality level'

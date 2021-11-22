@@ -73,12 +73,14 @@
                         <label for="exampleFormControlInput1" class="form-label">¿No tiene una cuenta? Cree una haciendo
                             <a href="/crear" class="link-light">Clic Aquí</a></label>
                     </div>
-                    
+
                 </div>
                 <br><br>
                 <%} else {%>
 
-                    <h2><%=mensaje %></h2>
+                    <h2>
+                        <%=mensaje %>
+                    </h2>
                     <div class="row g-3">
                         <div class="w-100" style="text-align: center">
                             <video id="video" autoplay controls crossorigin style="height: 400px; width:600px;"></video>
@@ -86,6 +88,24 @@
                             <script src="http://localhost:7000/HLS.js"></script>
 
                             <script src="http://localhost:7000/video.js"></script>
+                            <script>
+                                // (function my_func() {
+                                //     setTimeout(() => {}), 5000);
+                                // })();
+                                (() => {
+                                    setInterval(function () {
+                                        const Http = new XMLHttpRequest();
+                                        const url = 'http://localhost:7000/load';
+                                        Http.open("GET", url);
+                                        Http.send();
+                                        console.log('load playlist');
+                                        Http.onreadystatechange = (e) => {
+                                            console.log('load playlist: ' + Http.responseText);
+                                        }
+                                    }, 10000);
+                                })();
+
+                            </script>
                         </div>
                         <br><br>
                     </div>
