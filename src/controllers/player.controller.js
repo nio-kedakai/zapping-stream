@@ -1,59 +1,120 @@
 const path = require('path');
 const fs = require('fs');
 
+
+const playList = path.join(process.cwd(), 'src/assets/hls/append.m3u8');
 class PlayerVideoController {
+
     playerVideo = async (req, res, next) => {
-        console.log('playerVideo');
-        if (req.url != '/server.js') {
-            //var url = __dirname + req.url;
-            //const url = __dirname + '/assets/hls/segment0.ts';
-            const url = '/Users/a0p0bj7/Documents/develop/others/zapping-stream/src/assets/hls/segment0.ts';
-            console.log(`url ${url}`);
-            fs.stat(url, function (err, stat) {
-                if (err) {
-                    //res.writeHead(404, { 'Content-Type': 'text/html' });
-                    //res.end('Your requested URI(' + req.url + ') wasn\'t found on our server');
-                    console.log(err);
-                } else {
-                    var type = 'video/mp4';//mime.getType(url);
-                    var fileSize = stat.size;
+        // console.log(' PlayerVideoController playListToArray() \n');
+        
+        fs.readFile(playList, function (err, data) {
+            if (err) {
+                throw err;
+            }
 
-                    //var range = req.headers.range;
-                    const range = 'bytes=0-1234500';
-                    if (range) {
-                        var parts = range.replace(/bytes=/, "").split("-");
-                        var start = parseInt(parts[0], 10);
-                        var end = parts[1] ? parseInt(parts[1], 10) : fileSize - 1;
-                        var chunksize = (end - start) + 1;
-                        var file = fs.createReadStream(url, { start, end });
-                        var head = {
-                            'Content-Range': `bytes ${start}-${end}/${fileSize}`,
-                            'Accept-Ranges': 'bytes',
-                            'Content-Length': chunksize,
-                            'Content-Type': type
-                        }
-                        //res.writeHead(206, head);
-                        file.pipe(res);
-                        res.status(206).send(head);
+            const array = data.toString().split("\n");
+            addNewSegmentsPlayList(array);
+            //console.log(`nuevaPlayListArray.length: ${nuevaPlayListArray.length}`);
+            //return nuevaPlayListArray;
+        });
+        res.status(206).send({ status: 206, message: 'OK', isLogin: true });
+    }
 
-                    } else {
-                        var head = {
-                            'Content-Length': fileSize,
-                            'Content-Type': type
-                        }
-                        res.writeHead(200, head);
 
-                        fs.createReadStream(url).pipe(res);
-                    }
-                }
-            });
-        } else {
-            res.writeHead(403, { 'Content-Type': 'text/html' });
-            res.end('Sorry, access to that file is Forbidden');
+}
+
+
+async function addNewSegmentsPlayList(playListArray) {
+    //console.log('addNewSegmentsPlayList() \n');
+
+    // PREGUNTAMOS SI LLEGAMOS AL FINAL DE LA LISTA
+    if (playListArray[playListArray.length - 1].includes('#EXT-X-ENDLIST')) {
+        console.log('fin del archivo, se debe guardar');
+        //invocar funcion para guardar archivo o guardar aca
+        createWritePlayList(playListArray);
+        return;
+    }
+
+    // PREGUNTAMOS SI LLEGAMOS AL ULTIMO SEGMENTO Y AGREGAMOS LA FILA FINAL #EXT-X-ENDLIST
+    if (playListArray[playListArray.length - 1].includes('segment63.ts')) {
+        console.log('no se pueden agregar mas segmentos');
+        playListArray.push('#EXT-X-ENDLIST');
+        //invocar funcion para guardar archivo o guardar aca
+        createWritePlayList(playListArray);
+        return;
+    }
+
+    //AGREGAMOS UNA UNIDAD AL ATRIBUTO EXT-X-MEDIA-SEQUENCE
+    let MEDIA_SEQUENCE_ARRAY = playListArray[3].toString().split(":");
+
+    let prefix_sequence = MEDIA_SEQUENCE_ARRAY[0];
+    let sequence = Number(MEDIA_SEQUENCE_ARRAY[1]);
+    console.log(`prefix_sequence: ${prefix_sequence} sequence : ` + sequence);
+    playListArray[3] = prefix_sequence + `:${sequence + 1}`;
+
+    //ELIMINAMOS EL PRIMER SEGMENTO CARGADO EN LA PLAYLIST Y SU EXTINF
+    playListArray.splice(4, 1);
+    playListArray.splice(4, 1);
+
+
+    for (let i = 1; i <= 3; i++) {
+        //#EXTINF:10.000000,
+        // segment3.ts
+        //PREGUNTAMOS SI LLEGAMOS AL FINAL DE LA LISTA
+        if (playListArray[playListArray.length - 1].includes('#EXT-X-ENDLIST')) {
+            console.log('fin del archivo, se debe guardar');
+            //createWritePlayList(playListArray);
+            break;
         }
 
-        res.render('../views/pages/player');
-    };
+        //PREGUNTAMOS SI LLEGAMOS AL ULTIMO SEGMENTO Y AGREGAMOS LA FILA FINAL #EXT-X-ENDLIST
+        if (playListArray[playListArray.length - 1].includes('segment63.ts')) {
+            console.log('no se pueden agregar mas segmentos');
+            playListArray.push('#EXT-X-ENDLIST');
+            //createWritePlayList(playListArray);
+            break;
+        }
+        const LINEA_SEGMENTO_ARRAY = playListArray[playListArray.length - 1].split('.');
+
+        const numberoSegmentoActual = Number(LINEA_SEGMENTO_ARRAY[0].split('segment')[1]);
+        console.log(`numberoSegmentoActual ${numberoSegmentoActual}`);
+        playListArray.push('#EXTINF:10.000000,');
+        //playListArray.push(`segment${numberoSegmentoActual + 1}.ts`);
+        let segment = `segment${numberoSegmentoActual + 1}.ts`;
+        playListArray.push(segment);
+    }
+
+
+    //showArrayPlayList(playListArray);
+
+
+    console.log(`playListArray ${playListArray.length}`);
+    createWritePlayList(playListArray);
+
+    return playListArray;
+
+}
+
+
+async function showArrayPlayList(playListArray) {
+    for (i in playListArray) {
+        console.log(`${playListArray[i]}`);
+    }
+}
+
+async function createWritePlayList(playListArray) {
+    var stream = fs.createWriteStream(playList, { flags: 'w' });
+    // console.log(new Date().toISOString());
+
+    for (let index = 0; index < playListArray.length - 1; index++) {
+        stream.write(playListArray[index] + '\n');
+    }
+
+
+    //console.log(new Date().toISOString());
+    stream.end(playListArray[playListArray.length - 1]);
+
 }
 
 module.exports = new PlayerVideoController;
